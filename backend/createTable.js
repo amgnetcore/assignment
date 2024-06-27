@@ -46,7 +46,7 @@ async function createTable() {
   } catch (error) {
     console.error('Error creating company table:', error);
   } finally {
-    await db.destroy(); // Close the database connection
+    await db.destroy(); 
   }
 }
 

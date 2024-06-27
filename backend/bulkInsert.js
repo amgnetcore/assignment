@@ -1,4 +1,4 @@
-// bulkInsert.js
+
 
 const knex = require('knex');
 const companyData = require('./companyData');
@@ -7,10 +7,7 @@ const companyData = require('./companyData');
 
 const moment = require('moment');
 
-// Knex configuration for PostgreSQL
 
-
-// Knex configuration for PostgreSQL
 const knexConfig = {
   client: 'pg',
   connection: {
@@ -21,12 +18,11 @@ const knexConfig = {
   }
 };
 
-// Sample data for bulk insertion (replace this with your actual data)
+
 
 async function bulkInsert() {
     const db = knex(knexConfig);
-    const batchSize = 500; // Adjust batch size as needed
-  
+    const batchSize = 500; 
     try {
       // Convert AuthorisedCapital and PaidUpCapital from string to integer and convert dates to proper format
       const formattedCompanyData = companyData.map(company => {
@@ -35,13 +31,13 @@ async function bulkInsert() {
   
         // Set default values for invalid Authorised Capital and Paid Up Capital
         if (isNaN(authorisedCapital)) {
-          authorisedCapital = 0; // Default value
+          authorisedCapital = 0; 
           console.error(`Invalid integer value for Authorised Capital in record: ${company["Company Name"]}`);
           console.log(`Authorised Capital: ${company["Authorised Capital"]}, Paid Up Capital: ${company["Paid Up Capital"]}`);
         }
   
         if (isNaN(paidUpCapital)) {
-          paidUpCapital = 0; // Default value
+          paidUpCapital = 0; 
           console.error(`Invalid integer value for Paid Up Capital in record: ${company["Company Name"]}`);
           console.log(`Authorised Capital: ${authorisedCapital}, Paid Up Capital: ${company["Paid Up Capital"]}`);
         }
@@ -101,9 +97,9 @@ async function bulkInsert() {
     } catch (error) {
       console.error('Error inserting data:', error);
     } finally {
-      await db.destroy(); // Close the database connection
+      await db.destroy(); 
     }
   }
   
-  // Run the bulkInsert function
+  
   bulkInsert();

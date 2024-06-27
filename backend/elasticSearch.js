@@ -13,27 +13,27 @@ const knex = require('knex')({
 
 const elasticClient = new elasticsearch.Client({
     host: 'http://localhost:9200',
-    log: 'trace' // Log level can be adjusted as needed
+    log: 'trace' 
   });
 
 async function migrateData() {
   try {
-    // Query data from PostgreSQL
+   
     const data = await knex.select('*').from('company');
     
-    // Prepare bulkBody for Elasticsearch indexing
+    
     const body = data.flatMap(doc => [
       { index: { _index: 'companies_index' } },
       doc
     ]);
 
-    // Index data into Elasticsearch
+    
     const { body: bulkResponse } = await elasticClient.bulk({ refresh: true, body });
 
-    // Check for errors in bulk response
+    
     if (bulkResponse.errors) {
       const erroredDocuments = [];
-      // Analyze and log errors
+      
       bulkResponse.items.forEach((action, i) => {
         const operation = Object.keys(action)[0];
         if (action[operation].error) {
@@ -50,7 +50,7 @@ async function migrateData() {
       console.log('Data indexed successfully.');
     }
 
-    // Optionally configure autocomplete/suggesters in Elasticsearch here
+   
 
   } catch (error) {
     console.error('Error migrating data:', error);

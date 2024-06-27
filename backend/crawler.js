@@ -102,7 +102,7 @@ async function scrapeCompanyData(browser, url) {
 async function scrapeAndWriteData() {
     const browser = await puppeteer.launch({
         timeout: 0, // Disable timeout for puppeteer operations
-        // other options...
+       
     });
 
     try {
